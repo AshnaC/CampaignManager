@@ -17,79 +17,20 @@ class CampaignLayout extends React.PureComponent {
   state = {
     campaignList: [
       {
-        name: "A",
-        creator: "B",
+        name: "Push Notification 1",
+        creator: "Sam",
         id: 0,
-        history: [{ action: 1, creator: "D" }]
+        history: [{ action: 1, creator: "Sam" }]
       },
       {
-        name: "A",
-        creator: "B",
+        name: "Push Notification 1",
+        creator: "Smith",
         id: 1,
         history: [{ action: 1, creator: "D" }]
       },
-      {
-        name: "A",
-        creator: "B",
-        id: 2,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        id: 3,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        id: 4,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        id: 5,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        id: 6,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        id: 7,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        id: 8,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        id: 9,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        id: 10,
-        history: [{ action: 1, creator: "D" }]
-      },
-      {
-        name: "A",
-        creator: "B",
-        history: [{ action: 1, creator: "D" }]
-      }
     ],
     selectedPage: 0,
-    pageNo: 2
+    pageNo: 1
   };
   render() {
     const selectedList = this.state.campaignList.slice(
@@ -222,8 +163,7 @@ class CampaignLayout extends React.PureComponent {
     let campaign = { ...campaignList[index] };
     const newEvent = { action: this.props.actions.COMMENTED, creator, comment };
     let history = [...campaign.history, newEvent];
-    let comments = [...campaign.comments, comment];
-    campaign = { ...campaign, history, comments };
+    campaign = { ...campaign, history};
     campaignList[index] = campaign;
     this.setState({
       campaignList,

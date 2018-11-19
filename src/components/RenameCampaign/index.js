@@ -32,7 +32,7 @@ class RenameCampaign extends React.PureComponent {
         </div>
         <button
           className={`add_button ${enableButton ? "" : "disabled"}`}
-          onClick={enableButton && this.saveName}
+          onClick={enableButton && this.saveName || null}
         >
           Save
         </button>
