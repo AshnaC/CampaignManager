@@ -14,8 +14,88 @@ import AddComment from "../AddComment";
 import HistoryList from "../HistoryList";
 
 class CampaignLayout extends React.PureComponent {
-  state = { campaignList: [] };
+  state = {
+    campaignList: [
+      {
+        name: "A",
+        creator: "B",
+        id: 0,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 1,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 2,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 3,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 4,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 5,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 6,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 7,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 8,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 9,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        id: 10,
+        history: [{ action: 1, creator: "D" }]
+      },
+      {
+        name: "A",
+        creator: "B",
+        history: [{ action: 1, creator: "D" }]
+      }
+    ],
+    selectedPage: 0,
+    pageNo: 2
+  };
   render() {
+    const selectedList = this.state.campaignList.slice(
+      this.state.selectedPage * 10,
+      this.state.selectedPage * 10 + 10
+    );
     return (
       <div className="layout_wrapper">
         <div className="header">
@@ -40,9 +120,12 @@ class CampaignLayout extends React.PureComponent {
         )}
         <div className="campaign_list_container">
           <CampaignList
+            pageNo={this.state.pageNo}
             menu={this.props.menu}
             selectedIndex={this.state.selectedIndex}
-            campaignList={this.state.campaignList}
+            selectedPage={this.state.selectedPage}
+            changeSelectedPage={this.changeSelectedPage}
+            selectedList={selectedList}
             deleteCampaign={this.deleteCampaign}
             pauseOrResume={this.pauseOrResume}
             openActionWindow={this.openActionWindow}
@@ -78,6 +161,10 @@ class CampaignLayout extends React.PureComponent {
     );
   }
 
+  changeSelectedPage = selectedPage => {
+    this.setState({ selectedPage, selectedIndex: null, menu: "" });
+  };
+
   closeActionWindow = () => {
     this.setState({ menu: this.props.menu.HISTORY });
   };
@@ -93,11 +180,18 @@ class CampaignLayout extends React.PureComponent {
   deleteCampaign = index => {
     let campaignList = [...this.state.campaignList];
     campaignList.splice(index, 1);
+    const pageNo = Math.ceil(campaignList.length / 10);
+    this.setState(prevState => {
+      if (prevState.selectedPage > pageNo - 1) {
+        return { selectedPage: prevState.selectedPage - 1 };
+      }
+    });
     this.setState({
       campaignList,
       action: "",
       selectedCamp: null,
-      selectedIndex: null
+      selectedIndex: null,
+      pageNo
     });
   };
 
@@ -162,11 +256,14 @@ class CampaignLayout extends React.PureComponent {
       const id = prevState.campaignList.length;
       campaign.id = id;
       const campaignList = [...prevState.campaignList, campaign];
+      const pageNo = Math.ceil(campaignList.length / 10);
       return {
+        pageNo,
         campaignList,
         openForm: false,
         selectedCamp: campaign,
         selectedIndex: id,
+        selectedPage: pageNo - 1,
         menu: this.props.menu.HISTORY
       };
     });
@@ -175,7 +272,7 @@ class CampaignLayout extends React.PureComponent {
 
 CampaignLayout.propTypes = {
   actions: PropTypes.object,
-  actions: PropTypes.object,
+  actions: PropTypes.object
 };
 
 export default CampaignLayout;
